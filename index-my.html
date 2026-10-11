@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A CHANDRU – Cinematic Portfolio</title>
+<meta name="description" content="A Chandru, web developer in Chennai. PHP, WordPress, front-end and SEO.">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bk:#0A0706;--rd:#F0270E;--or:#FF7A1A;--bn:#F4EAE2;--mu:#A89B93;--a:'Anton',Impact,sans-serif;--b:'DM Sans',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bk);color:var(--bn);font:400 1rem/1.6 var(--b);overflow-x:hidden}
+a{color:inherit}:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+canvas#em{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}
+.scene{position:relative;z-index:2}.stage{position:sticky;top:0;height:100vh;overflow:hidden}
+.cap{font:700 .8rem var(--b);letter-spacing:.35em;color:var(--or);padding:0 6vw;margin-bottom:12px;text-align:center}
+
+/* loader */
+#ld{position:fixed;inset:0;z-index:100;background:var(--bk);display:grid;place-items:center;transition:opacity .9s .5s,visibility 0s 1.4s}
+#ld.done{opacity:0;visibility:hidden}
+.lw{position:relative;font:400 clamp(3rem,15vw,12rem)/1 var(--a);white-space:nowrap;transition:transform 1.3s cubic-bezier(.7,0,.2,1)}
+#ld.done .lw{transform:scale(7)}
+.lw .o{color:transparent;-webkit-text-stroke:1px #ffffff55}
+.lw .f{position:absolute;inset:0;color:var(--rd);clip-path:inset(100% 0 0 0);text-shadow:0 0 40px #ff3b0f88}
+#pc{position:absolute;bottom:8vh;left:0;right:0;text-align:center;color:var(--mu);letter-spacing:.3em;font-size:.8rem}
+
+/* side nav */
+#sn{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:60;display:grid;gap:14px;text-align:right}
+#sn a{font-size:.72rem;letter-spacing:.25em;text-decoration:none;color:var(--mu);transition:color .3s,transform .3s}
+#sn a.on{color:var(--or);transform:translateX(-8px)}
+#top{position:fixed;left:22px;top:20px;z-index:60;font:400 1.4rem var(--a);letter-spacing:.05em;text-decoration:none}
+
+/* hero */
+#hero{height:180vh}
+.nm{position:absolute;left:50%;top:50%;font:400 clamp(7rem,30vw,30rem)/.85 var(--a);color:var(--rd);white-space:nowrap;
+  text-shadow:0 0 80px #ff2a0066;background:linear-gradient(#ff3b1a,#a30f00);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+body.ready .nm{animation:slam 1.6s cubic-bezier(.2,.9,.2,1) both}
+@keyframes slam{from{opacity:0;filter:blur(30px);letter-spacing:.3em}}
+.wel{position:absolute;top:16vh;left:0;right:0;text-align:center}
+.sil{position:absolute;left:50%;bottom:0;height:78vh;transform:translateX(-50%);filter:drop-shadow(0 0 22px #ff3b0f99)}
+.sil svg,.sil img{height:100%;display:block}
+.tag{position:absolute;left:5vw;bottom:8vh;border:1px solid #ffffff44;padding:6px 14px;font-size:.75rem;letter-spacing:.2em}
+.sc{position:absolute;right:5vw;bottom:8vh;font-size:.75rem;letter-spacing:.3em;color:var(--mu)}
+.sc::after{content:'';display:block;height:44px;width:1px;background:var(--or);margin:10px 0 0 auto;animation:dr 1.6s infinite}
+@keyframes dr{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* journey */
+#jr{height:380vh}
+#jr .stage{display:grid;place-items:center;background:radial-gradient(ellipse at 50% 90%,#5a1a0a55,transparent 60%)}
+.jt{position:absolute;left:6vw;top:12vh;font:400 clamp(2rem,5vw,3.6rem)/1 var(--a)}
+.jb{position:relative;width:min(94vw,1200px);aspect-ratio:1200/600}
+.jb svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.nd{position:absolute;width:19%;transform:translate(-50%,18px);opacity:.12;transition:opacity .6s,transform .6s}
+.nd.on{opacity:1;transform:translate(-50%,0)}
+.nd b{display:block;font:400 clamp(1.1rem,2.4vw,1.9rem) var(--a);color:var(--or)}
+.nd h3{font:500 clamp(.8rem,1.3vw,1rem) var(--b);margin-bottom:4px}
+.nd p{font-size:clamp(.65rem,1vw,.85rem);color:var(--mu);line-height:1.4}
+.nd .pin{position:absolute;left:50%;top:-14px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--or);box-shadow:0 0 16px var(--or)}
+
+/* universe */
+#un{height:300vh}
+#un .stage{perspective:1300px;background:radial-gradient(ellipse at 50% 60%,#4a140a66,transparent 65%)}
+.orb{position:absolute;inset:0;transform-style:preserve-3d}
+.tile{position:absolute;left:50%;top:50%;width:clamp(90px,13vw,150px);aspect-ratio:1;border-radius:20px;display:grid;place-items:center;
+  font:400 clamp(1rem,2vw,1.6rem) var(--a);background:linear-gradient(145deg,#231813,#0d0807);border:1px solid #ff7a1a55;box-shadow:0 0 40px #ff3b0f30,inset 0 0 20px #ff7a1a18}
+.orb .sil{height:74vh;bottom:-4vh;transform:translateX(-50%)}
+.rb{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.rb path{fill:none;stroke-linecap:round;filter:drop-shadow(0 0 10px #ff5a00) drop-shadow(0 0 24px #ff3b0f)}
+.ut{position:absolute;top:12vh;left:0;right:0;text-align:center;font:400 clamp(2rem,6vw,4.5rem)/1 var(--a);z-index:5}
+
+/* projects */
+#pj{height:360vh}
+#pj .stage{perspective:1400px;background:radial-gradient(ellipse at 50% 100%,#6a1a0a55,transparent 60%)}
+.pt{position:absolute;top:11vh;left:6vw;font:400 clamp(2rem,5vw,3.6rem)/1 var(--a)}
+.pc{position:absolute;left:50%;top:54%;width:clamp(230px,30vw,340px);height:clamp(310px,58vh,440px);padding:24px;border-radius:18px;text-decoration:none;
+  display:flex;flex-direction:column;justify-content:space-between;border:1px solid #ffffff2a;box-shadow:0 40px 80px #000a;will-change:transform}
+.pc small{font-size:.75rem;letter-spacing:.2em;opacity:.85}
+.pc h3{font:400 clamp(1.8rem,3.6vw,2.8rem)/1 var(--a)}
+.pc span{font-size:.9rem}.pc em{font-style:normal;border-bottom:1px solid currentColor}
+
+/* finale */
+#fin{position:relative;z-index:2;background:linear-gradient(#0A0706,#B01808 35%,#F0270E);padding:22vh 6vw 60px;overflow:hidden}
+#fin h2{font:400 clamp(4rem,19vw,18rem)/.88 var(--a);color:var(--bn);text-shadow:0 10px 60px #0006}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:70px}
+.fg a.mail{font:400 clamp(1.3rem,3vw,2.4rem) var(--a);word-break:break-all;text-decoration:none}
+form{display:grid;gap:12px}
+input,textarea{background:#0006;border:1px solid #ffffff55;border-radius:10px;padding:14px;color:#fff;font:inherit;width:100%}
+input::placeholder,textarea::placeholder{color:#ffffffaa}
+button{background:var(--bk);color:var(--bn);border:0;border-radius:99px;padding:15px 30px;font:500 1rem var(--b);cursor:pointer;transition:transform .25s}
+button:hover{transform:translateY(-3px)}
+footer{margin-top:60px;font-size:.85rem;opacity:.8}
+@media(max-width:760px){.fg{grid-template-columns:1fr}#sn{display:none}.nd p{display:none}.nd{width:24%}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+</style></head>
+<body>
+<div id="ld"><div class="lw" aria-label="A CHANDRU"><span class="o">A CHANDRU</span><span class="f" id="lf">A CHANDRU</span></div><div id="pc">0%</div></div>
+<canvas id="em"></canvas>
+<a id="top" href="#hero">A CHANDRU</a>
+<nav id="sn"><a href="#hero">HOME</a><a href="#jr">JOURNEY</a><a href="#un">UNIVERSE</a><a href="#pj">PROJECTS</a><a href="#fin">CONTACT</a></nav>
+
+<section id="hero" class="scene"><div class="stage">
+  <div class="wel cap">■ WELCOME TO MY WORLD ■</div>
+  <div class="nm" id="nm">CHANDRU</div>
+  <div class="sil" id="s1"></div>
+  <div class="tag">WEB DEVELOPER · CHENNAI</div>
+  <div class="sc">SCROLL</div>
+</div></section>
+
+<section id="jr" class="scene"><div class="stage">
+  <h2 class="jt">A JOURNEY<br>THROUGH TIME</h2>
+  <div class="jb" id="jb">
+    <svg viewBox="0 0 1200 600" aria-hidden="true">
+      <path id="p0" d="M60 380Q600 -100 1140 380" fill="none" stroke="#ffffff22" stroke-width="2"/>
+      <path id="p1" d="M60 380Q600 -100 1140 380" fill="none" stroke="#ff7a1a" stroke-width="3" style="filter:drop-shadow(0 0 10px #ff5a00)"/>
+      <circle id="dot" r="9" fill="#fff" style="filter:drop-shadow(0 0 14px #ff7a1a) drop-shadow(0 0 30px #ff3b0f)"/>
+    </svg>
+    <div class="nd"><i class="pin"></i><b>Jan 2022</b><h3>10th class</h3><p>Z P High School Pudupet</p></div>
+    <div class="nd"><i class="pin"></i><b>Jun 2023</b><h3>Intermediate</h3><p>Sri Surya Junior College</p></div>
+    <div class="nd"><i class="pin"></i><b>May 2025</b><h3>B.Tech + NxtWave</h3><p>Computer Engineering at Bharath Institute. CCBP 4.0 Academy for full-stack skills.</p></div>
+    <div class="nd"><i class="pin"></i><b>May 2026</b><h3>Web Development Intern</h3><p>Z6 IT Technologies. PHP, MySQL, Bootstrap and live client sites.</p></div>
+    <div class="nd"><i class="pin"></i><b>Aug 2026</b><h3>Stipend Intern</h3><p>Responsive sites, WordPress and on-page SEO.</p></div>
+  </div>
+</div></section>
+
+<section id="un" class="scene"><div class="stage">
+  <h2 class="ut">MY TECH UNIVERSE</h2>
+  <svg class="rb" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+    <path id="r1" d="M-50 640C250 760 450 330 700 420S1000 620 1250 300" stroke="#ff6a1a" stroke-width="5" stroke-dasharray="900 300"/>
+    <path id="r2" d="M-50 300C300 120 500 560 760 380S1050 200 1250 520" stroke="#ff3b0f" stroke-width="3" stroke-dasharray="500 400"/>
+  </svg>
+  <div class="orb" id="orb">
+    <div class="sil"></div>
+    <div class="tile">PHP</div><div class="tile">JavaScript</div><div class="tile">HTML5</div><div class="tile">CSS3</div><div class="tile">Bootstrap</div>
+    <div class="tile">MySQL</div><div class="tile">WordPress</div><div class="tile">GitHub</div><div class="tile">SEO</div><div class="tile">AI tools</div>
+  </div>
+</div></section>
+
+<section id="pj" class="scene"><div class="stage">
+  <h2 class="pt">PROJECTS</h2>
+  <a class="pc" href="https://policynestsolutions.com/" target="_blank" rel="noopener" style="background:linear-gradient(150deg,#FF3B0F,#7A0C00)">
+    <small>policynestsolutions.com</small><h3>PolicyNest Solutions</h3><span>Insurance services website<br><em>Visit site ↗</em></span></a>
+  <a class="pc" href="https://anthillaarchitectz.com/" target="_blank" rel="noopener" style="background:linear-gradient(150deg,#FFB020,#8A3200)">
+    <small>anthillaarchitectz.com</small><h3>Anthill Architectz</h3><span>Architecture studio website<br><em>Visit site ↗</em></span></a>
+  <a class="pc" href="https://chanrestaurant.ccbp.tech/" target="_blank" rel="noopener" style="background:linear-gradient(150deg,#FF5A36,#4A0A2A)">
+    <small>chanrestaurant.ccbp.tech</small><h3>Chan Restaurant</h3><span>Restaurant website · NxtWave<br><em>Visit site ↗</em></span></a>
+  <a class="pc" href="#fin" style="background:linear-gradient(150deg,#2A2A2A,#0A0A0A)">
+    <small>CONTACT</small><h3>Your project next</h3><span>Let us build it together<br><em>Start a project ↗</em></span></a>
+</div></section>
+
+<section id="fin">
+  <p class="cap">LET US BUILD SOMETHING</p>
+  <h2>A CHANDRU</h2>
+  <div class="fg">
+    <div>
+      <a class="mail" href="mailto:chandrusmartcode@gmail.com">chandrusmartcode@gmail.com</a>
+      <p style="margin-top:18px"><a href="tel:9490756195">9490756195</a><br>
+      <a href="https://www.linkedin.com/in/chandrusmartcode" target="_blank" rel="noopener">LinkedIn</a> ·
+      <a href="https://github.com/chandru-smart-code" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+    <form id="cf" novalidate>
+      <p id="fm" role="status"></p>
+      <input name="n" placeholder="Your name" aria-label="Your name" required>
+      <input name="e" type="email" placeholder="Your email" aria-label="Your email" required>
+      <textarea name="m" rows="4" placeholder="Tell me about your project" aria-label="Message" required></textarea>
+      <button type="submit">Send message</button>
+    </form>
+  </div>
+  <footer>© <span id="yr"></span> A CHANDRU · Chennai, Tamil Nadu</footer>
+</section>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+var clamp=function(v){return Math.min(1,Math.max(0,v))};
+$('#yr').textContent=new Date().getFullYear();
+
+/* photo: shown only if assets/me.png exists */
+var sils=$$('.sil');
+var im=new Image();im.onload=function(){sils.forEach(function(s){s.innerHTML='<img src="assets/me.png" alt="A CHANDRU">'})};im.src='assets/me.png';
+
+/* contact form: opens the visitor's email app (static HTML can't send mail itself) */
+$('#cf').addEventListener('submit',function(ev){ev.preventDefault();
+  var f=ev.target,n=f.n.value.trim(),e=f.e.value.trim(),m=f.m.value.trim(),fm=$('#fm');
+  if(!n||!/^\S+@\S+\.\S+$/.test(e)||!m){fm.textContent='Fill in your name, a valid email and a message.';return}
+  location.href='mailto:chandrusmartcode@gmail.com?subject='+encodeURIComponent('Portfolio message from '+n)+'&body='+encodeURIComponent(m+'\n\n'+n+' ('+e+')');
+  fm.textContent='Opening your email app… you can also email me directly.'});
+
+/* loader */
+var ld=$('#ld'),lf=$('#lf'),pc=$('#pc'),v=0;
+var t=setInterval(function(){v=Math.min(100,v+Math.random()*6+2);lf.style.clipPath='inset('+(100-v)+'% 0 0 0)';pc.textContent=Math.floor(v)+'%';
+  if(v>=100){clearInterval(t);setTimeout(function(){ld.classList.add('done');document.body.classList.add('ready')},450)}},80);
+/* scroll progress (eased) */
+var sc=['hero','jr','un','pj'].map(function(id){var e=document.getElementById(id);return {e:e,p:0,t:0}});
+function raw(e){var r=e.getBoundingClientRect();return clamp(-r.top/(r.height-innerHeight))}
+/* hero */
+var nm=$('#nm'),s1=$('#s1'),mx=0;
+addEventListener('pointermove',function(e){mx=e.clientX/innerWidth-.5});
+function hero(p){nm.style.transform='translate(calc(-50% + '+(-mx*40)+'px),-50%) scale('+(1+p*.9)+')';nm.style.opacity=1-p*1.15;
+  s1.style.transform='translateX(calc(-50% + '+(mx*26)+'px)) scale('+(1+p*.18)+')'}
+/* journey */
+var p1=$('#p1'),dot=$('#dot'),L=p1.getTotalLength(),nd=$$('.nd');
+p1.style.strokeDasharray=L;
+nd.forEach(function(n,i){var tt=.07+.86*i/(nd.length-1),pt=p1.getPointAtLength(L*tt);n._t=tt;
+  n.style.left=(pt.x/12)+'%';n.style.top=((pt.y+22)/6)+'%'});
+function jr(p){var q=clamp(p*1.08);p1.style.strokeDashoffset=L*(1-q);var pt=p1.getPointAtLength(L*q);dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);
+  nd.forEach(function(n){n.classList.toggle('on',q>=n._t-.02)})}
+/* universe */
+var tiles=$$('.tile'),r1=$('#r1'),r2=$('#r2'),T=0;
+function un(p){var R=Math.min(innerWidth*.42,520);
+  tiles.forEach(function(el,i){var a=i/tiles.length*6.2832+T*.0004+p*5,x=Math.cos(a)*R,z=Math.sin(a)*R*.9,y=Math.sin(a*2+i)*60-20;
+    el.style.transform='translate(-50%,-50%) translate3d('+x+'px,'+y+'px,'+z+'px) rotateY('+(Math.cos(a)*-25)+'deg)';
+    el.style.opacity=.55+.45*(z/R+1)/2});
+  r1.style.strokeDashoffset=-p*2400-T*.15;r2.style.strokeDashoffset=p*1800+T*.1}
+/* projects */
+var pcs=$$('.pc');
+function pj(p){var n=pcs.length,w=Math.min(innerWidth*.34,370);
+  pcs.forEach(function(c,i){var o=i-p*(n-1),a=Math.abs(o);
+    c.style.transform='translate(-50%,-50%) translateX('+(o*w*1.12)+'px) translateZ('+(-a*240)+'px) rotateY('+(-o*30)+'deg)';
+    c.style.opacity=Math.max(.25,1-a*.32);c.style.zIndex=10-Math.round(a*3);c.style.pointerEvents=a<.7?'auto':'none'})}
+var fn=[hero,jr,un,pj];
+/* side nav */
+var links=$$('#sn a'),ids=['hero','jr','un','pj','fin'];
+function nav(){var y=innerHeight*.4,cur=0;ids.forEach(function(id,i){if(document.getElementById(id).getBoundingClientRect().top<y)cur=i});
+  links.forEach(function(l,i){l.classList.toggle('on',i===cur)})}
+/* embers */
+var cv=$('#em'),cx=cv.getContext('2d'),P=[],reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+for(var i=0;i<70;i++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.4,s:Math.random()*.6+.2,d:Math.random()*6});
+function frame(ts){T=ts;
+  sc.forEach(function(s,i){s.t=raw(s.e);s.p+=(s.t-s.p)*.09;fn[i](s.p)});nav();
+  if(!reduce){cx.clearRect(0,0,cv.width,cv.height);
+    P.forEach(function(q){q.y-=q.s;q.x+=Math.sin(ts*.001+q.d)*.4;if(q.y<-5){q.y=cv.height+5;q.x=Math.random()*cv.width}
+      cx.beginPath();cx.arc(q.x,q.y,q.r,0,6.2832);cx.fillStyle='rgba(255,'+(90+q.r*30|0)+',20,'+(.3+q.r/4)+')';cx.shadowColor='#ff5a00';cx.shadowBlur=10;cx.fill()})}
+  requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+})();
+</script>
+</body></html>
